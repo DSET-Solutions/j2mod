@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.NetworkInterface;
+import java.net.Proxy;
 import java.net.Socket;
 import java.util.Objects;
 
@@ -49,6 +50,7 @@ public class TCPMasterConnection {
 
     private InetAddress address;
     private NetworkInterface networkInterface = null;
+    private Proxy proxy = null;
     private int port = Modbus.DEFAULT_PORT;
 
     private ModbusTCPTransport transport;
@@ -128,7 +130,7 @@ public class TCPMasterConnection {
 
             // Create a socket without auto-connecting
 
-            socket = new Socket();
+            socket = proxy != null ? new Socket(proxy) : new Socket();
             socket.setReuseAddress(true);
             socket.setSoLinger(true, 1);
             socket.setKeepAlive(true);
@@ -321,6 +323,16 @@ public class TCPMasterConnection {
      */
     public void setNetworkInterface(NetworkInterface networkInterface) {
         this.networkInterface = networkInterface;
+    }
+    
+    /**
+     * Sets the <tt>Proxy</tt> that this socket uses. If null (the default), no proxy is used.
+     */
+    public void setProxy(Proxy proxy) {
+        if(socket != null && proxy != null) {
+            throw new IllegalStateException("Cannot set proxy after connection has been established");
+        }
+        this.proxy = proxy;
     }
 
     /**
