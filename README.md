@@ -2,7 +2,8 @@
 
 `JAVA_HOME=/usr/lib/jvm/oracle-jdk-11 mvn clean install -DskipTests -Dmaven.javadoc.skip=true `
 
-Passar el .jar de target/*.jar a libs/ del projecte
+Passar el .jar de target/*.jar a libs/ del projecte.
+Ficar els canvis a master
 
 # Overview
 This project is a fork of the [j2mod](https://sourceforge.net/projects/j2mod/) library which began life as [jamod](http://jamod.sourceforge.net/). 
